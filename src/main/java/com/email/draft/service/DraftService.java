@@ -22,6 +22,6 @@ public interface DraftService {
 
   public DraftVO findById(long id);
   
-  public JsonNode sendMail(long id, String from) throws UnirestException;
+  public JsonNode sendMail(long id, String from) throws UnirestException, Exception;
   
 }

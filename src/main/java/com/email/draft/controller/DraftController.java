@@ -81,15 +81,16 @@ public class DraftController {
 	}
 	
 	@PostMapping(value = "/email/send/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity sendmail(@PathVariable("id") Long id, @RequestParam String from) throws UnirestException {
+    public ResponseEntity<String> sendmail(@PathVariable("id") Long id, @RequestParam String from) throws UnirestException {
 		try {
 			JsonNode response = service.sendMail(id, from);
 			System.out.println("response: "+response);
-			return ResponseEntity.ok("sent");
+			new ResponseEntity<String>("Sent Successfuly", HttpStatus.OK);
 		}catch(Exception ex) {
-			return ResponseEntity.noContent().build();
+			return new ResponseEntity<String>(ex.getMessage(), HttpStatus.NOT_MODIFIED);
 
 		}
+		return null;
     }
 
 }

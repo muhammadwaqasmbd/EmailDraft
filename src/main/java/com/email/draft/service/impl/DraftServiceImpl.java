@@ -103,7 +103,7 @@ public class DraftServiceImpl implements DraftService {
 	}
 
 	@Override
-	public JsonNode sendMail(long id, String from) throws UnirestException {
+	public JsonNode sendMail(long id, String from) throws Exception {
 		DraftVO draft = findById(id);
 		HttpResponse<JsonNode> request = Unirest.post(
 				  messagesUrl)
@@ -119,8 +119,11 @@ public class DraftServiceImpl implements DraftService {
 		System.out.println("status: "+request.getStatus());
 		if(request.getStatus() == 200) {
 			deleteById(draft.getId());
+			return request.getBody();
+		}else {
+			throw new Exception(request.getStatusText());
 		}
-		return request.getBody();
+		
 	}
 
 }
